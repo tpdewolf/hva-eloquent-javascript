@@ -1,0 +1,18 @@
+<!doctype html>
+
+<textarea id="code">console.log('test');</textarea>
+<button id="button">Run</button>
+<pre id="output"></pre>
+
+<script>
+  var button = document.querySelector("#button");
+  button.addEventListener("click", function() {
+    var code = document.querySelector("#code").value;
+    var output = document.querySelector("#output");
+    try {
+      eval(code);
+    } catch (e) {
+      output.innerText = "Error: " + e;
+    }
+  });
+</script>

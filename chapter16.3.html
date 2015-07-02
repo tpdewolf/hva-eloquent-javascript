@@ -1,0 +1,41 @@
+<!doctype html>
+
+<canvas width="400" height="400"></canvas>
+<script>
+  var cx = document.querySelector("canvas").getContext("2d");
+
+  var lastTime = null;
+  function frame(time) {
+    if (lastTime != null)
+      updateAnimation(Math.min(100, time - lastTime) / 1000);
+    lastTime = time;
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  var x = 100, y = 300;
+  var radius = 10;
+  var speedX = 100, speedY = 60;
+  var boxTop = 25;
+  var boxBottom = 350;
+
+  function updateAnimation(step) {
+    cx.clearRect(0, 0, 400, 400);
+    cx.strokeStyle = "black";
+    cx.lineWidth = 1;
+    cx.strokeRect(boxTop, boxTop, boxBottom, boxBottom);
+    
+    x += step * 2*speedX;
+    y += step * 2*speedY;
+    if (x < boxTop + radius || x > boxBottom - radius) {
+      speedX = -speedX;
+    }
+    if (y < boxTop + radius || y > boxBottom - radius) {
+      speedY = -speedY;
+    }
+    cx.fillStyle = "blue";
+    cx.beginPath();
+    cx.arc(x, y, radius, 0, 7);
+    cx.fill();
+  }
+</script>

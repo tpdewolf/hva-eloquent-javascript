@@ -1,0 +1,60 @@
+<!doctype html>
+<script src="code/chapter/19_paint.js"></script>
+
+<script>
+  function colorAt(cx, x, y) {
+    var pixel = cx.getImageData(x, y, 1, 1).data;
+    console.log(pixel);
+    return "rgb(" + pixel[0] + ", " + pixel[1] + ", " + pixel[2] + ")";
+  }
+
+  tools["Pick color"] = function(event, cx) {
+    var pos = relativePos(event, cx.canvas);
+	var color = colorAt(cx, pos.x, pos.y);
+    cx.fillStyle = color;
+    cx.strokeStyle = color;
+  };
+</script>
+
+<script>
+  function colorAt(cx, x, y) {
+    var pixel = cx.getImageData(x, y, 1, 1).data;
+    return "rgb(" + pixel[0] + ", " + pixel[1] + ", " + pixel[2] + ")";
+  }
+
+  tools["Pick color"] = function(event, cx) {
+    var pos = relativePos(event, cx.canvas);
+    try {
+      var color = colorAt(cx, pos.x, pos.y);
+    } catch(e) {
+      if (e instanceof SecurityError) {
+        alert("Unable to access your picture's pixel data");
+        return;
+      } else {
+        throw e;
+      }
+    }
+    cx.fillStyle = color;
+    cx.strokeStyle = color;
+  };
+</script>
+
+<style>
+.picturepanel {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: -ms-fit-content;
+  width: fit-content;
+  max-width: 500px;
+  max-height: 300px;
+  border: 2px solid silver;
+  overflow: auto;
+  position: relative;
+}
+.picturepanel canvas { display: block; }
+.toolbar > * { margin-right: 5px; }
+</style>
+
+<body>
+  <script>createPaint(document.body);</script>
+</body>

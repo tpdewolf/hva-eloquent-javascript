@@ -1,0 +1,37 @@
+<!doctype html>
+<body>
+<script>
+function deepEqual(first,second) {
+  if (first === second) {
+   return true;
+  } else {
+    if (first === null || second  === null) {
+     return false; 
+    } else {
+      if (typeof first == 'object' && typeof second == 'object') {
+        var check = 0;
+        for (key in first) {
+          if (deepEqual(first[key],second[key]) == false) {
+           check++; 
+          }
+        }
+        
+        if (check == 0) {
+          return true;
+        }
+        
+      }
+    }
+    return false;
+  }
+}
+
+var obj = {here: {is: "an"}, object: 2};
+console.log(deepEqual(obj, obj));
+// → true
+console.log(deepEqual(obj, {here: 1, object: 2}));
+// → false
+console.log(deepEqual(obj, {here: {is: "an"}, object: 2}));
+// → true
+</script>
+</body>

@@ -1,0 +1,39 @@
+<!doctype html>
+
+<canvas width="600" height="300"></canvas>
+<script>
+  var cx = document.querySelector("canvas").getContext("2d");
+  var total = results.reduce(function(sum, choice) {
+    return sum + choice.count;
+  }, 0);
+
+  var currentAngle = -0.5 * Math.PI;
+  var centerX = 300, centerY = 150;
+  var i = 0;
+  results.forEach(function(result) {
+    var sliceAngle = (result.count / total) * 2 * Math.PI;
+    cx.beginPath();
+    cx.arc(centerX, centerY, 100,
+           currentAngle, currentAngle + sliceAngle);
+
+    var middleAngle = currentAngle + 0.5 * sliceAngle;
+    var textX = 50;
+    var textY = 100+i*30;
+    cx.textBaseLine = "middle";
+    cx.textAlign = "left";
+    cx.font = "15px sans-serif";
+    cx.fillStyle = "black";
+    cx.fillText(result.name, textX, textY);
+    
+    currentAngle += sliceAngle;
+    cx.lineTo(centerX, centerY);
+    cx.fillStyle = result.color;
+    cx.fill();
+    
+    cx.beginPath();
+    cx.rect(20,textY-15,20,20);
+	cx.fillStyle = result.color;
+    cx.fill();
+    i++;
+  });
+</script>

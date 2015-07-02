@@ -1,0 +1,15 @@
+<!doctype html>
+
+<input type="text">
+<script>
+  var field = document.querySelector("input");
+  var char;
+  var forbidden = ['Q','W','X'];
+  field.addEventListener('keydown', function(event) {
+    char = String.fromCharCode(event.keyCode);
+    if (forbidden.indexOf(char) !== -1) {
+      console.log('FORBIDDEN');
+      event.preventDefault();
+    }
+  });
+</script>
